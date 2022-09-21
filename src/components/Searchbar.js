@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-export const Searchbar = () => {
+export const Searchbar = ({ query, searchHandler }) => {
 
-    const [keyword, setKeyword] = useState('Hola');
+    const [keyword, setKeyword] = useState(query);
 
     const submitHandler = (e) => {
         e.preventDefault();
-        alert('keyword: ' + keyword);
-        setKeyword('');
+        searchHandler(keyword);
+        setKeyword(keyword);
     }
 
     const keywordHandler = (e) => {

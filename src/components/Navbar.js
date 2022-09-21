@@ -1,7 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Searchbar } from './SearchBar';
+import { getProductsByKeyword, setProducts } from '@microfronts/api';
+
+
 
 export const Navbar = () => {
+
+    const [data, setData] = useState({
+        keyword: '',
+        products: [],
+        loggedIn: false,
+    });
+
+    useEffect(() => {
+        getProductsByKeyword(data.keyword)
+            .then(({ results }) => {
+                setData({ ...data, products: results });
+                setProducts(results);
+            });
+    }, [data.keyword]);
+
+    const searchHandler = (keyword) => {
+        setData({ ...data, keyword });
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container">
@@ -28,7 +50,7 @@ export const Navbar = () => {
                             otro
                         </li>
                     </ul>
-                    <Searchbar />
+                    <Searchbar query={data.keyword} searchHandler={searchHandler} />
                 </div>
             </div>
         </nav>
