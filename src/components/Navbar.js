@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Searchbar } from './SearchBar';
 import { getProductsByKeyword, setProducts } from '@microfronts/api';
 
 
 
 export const Navbar = () => {
+
+    const navigate = useNavigate();
 
     const [data, setData] = useState({
         keyword: '',
@@ -17,6 +20,7 @@ export const Navbar = () => {
             .then(({ results }) => {
                 setData({ ...data, products: results });
                 setProducts(results);
+                navigate("/");
             });
     }, [data.keyword]);
 
